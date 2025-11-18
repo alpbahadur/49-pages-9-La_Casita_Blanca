@@ -3,9 +3,1365 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website</title>
+    <title>LA CASITA BLANCA - Authentic Puerto Rican Cuisine Since 1980</title>
+    <meta name="description" content="Experience authentic Puerto Rican comida criolla at La Casita Blanca since 1980. James Beard Award winner featuring traditional family recipes in Santurce, San Juan.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom Tailwind Configuration */
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
+        :root {
+            --color-primary: #283618;
+            --color-secondary: #FEFAE0;
+            --color-accent: #BC6C25;
+            --color-background: #FDFDFD;
+            --color-text-primary: #1E1E1E;
+            --color-text-secondary: #606C38;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            color: var(--color-text-primary);
+            overflow-x: hidden;
+            position: relative;
+            background: var(--color-background);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* ========== ANIMATED TROPICAL BACKGROUND ========== */
+        .tropical-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FEFAE0 0%, #FDFDFD 50%, #F5F5DC 100%);
+            overflow: hidden;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .tropical-background::before,
+        .tropical-background::after {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(96, 108, 56, 0.08) 0%, transparent 70%);
+            animation: tropicalWave 30s ease-in-out infinite;
+        }
+
+        .tropical-background::before {
+            top: -50%;
+            left: -50%;
+            animation-delay: 0s;
+        }
+
+        .tropical-background::after {
+            bottom: -50%;
+            right: -50%;
+            animation-delay: -15s;
+        }
+
+        @keyframes tropicalWave {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            33% {
+                transform: translate(25px, -25px) rotate(120deg) scale(1.08);
+            }
+            66% {
+                transform: translate(-18px, 18px) rotate(240deg) scale(0.92);
+            }
+        }
+
+        /* Canvas for floating tropical particles */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== NAVIGATION ========== */
+        nav {
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(40, 54, 24, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* ========== HERO SECTION ========== */
+        .hero-overlay {
+            background: linear-gradient(to bottom, rgba(40, 54, 24, 0.6), rgba(40, 54, 24, 0.3));
+        }
+
+        .hero-title {
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 0.3s;
+        }
+
+        .hero-subtitle {
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 0.6s;
+        }
+
+        .hero-cta {
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 0.9s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== BUTTONS ========== */
+        .btn-primary {
+            background: var(--color-accent);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 0.375rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(188, 108, 37, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #D67D2E;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(188, 108, 37, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-primary);
+            padding: 0.875rem 2.25rem;
+            border: 2px solid var(--color-primary);
+            border-radius: 0.375rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ========== SCROLL ANIMATIONS ========== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== IMAGE EFFECTS ========== */
+        .image-container {
+            overflow: hidden;
+            border-radius: 0.5rem;
+            position: relative;
+        }
+
+        .image-zoom {
+            transition: transform 0.5s ease;
+        }
+
+        .image-container:hover .image-zoom {
+            transform: scale(1.08);
+        }
+
+        /* ========== MENU ITEMS ========== */
+        .menu-item {
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ========== MOBILE MENU ========== */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        /* ========== SECTION DIVIDER ========== */
+        .section-divider {
+            width: 60px;
+            height: 3px;
+            background: var(--color-accent);
+            margin: 1.5rem auto;
+        }
+
+        /* ========== CUSTOM SCROLLBAR ========== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-primary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-accent);
+        }
+
+        /* ========== TIMELINE STYLES ========== */
+        .timeline-item {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-item:nth-child(even) {
+            transform: translateX(50px);
+        }
+
+        .timeline-item:nth-child(even).visible {
+            transform: translateX(0);
+        }
+
+        /* ========== GALLERY GRID ========== */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, 0.8);
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--color-accent);
+        }
+
+        /* ========== UTILITY CLASSES ========== */
+        .text-shadow {
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* ========== SECTION DARK ========== */
+        .section-dark {
+            background: linear-gradient(135deg, #FEFAE0 0%, #F5F5DC 100%);
+        }
+
+        /* ========== DECORATIVE LINE ========== */
+        .decorative-line {
+            width: 60px;
+            height: 3px;
+            background: var(--color-accent);
+            margin: 1.5rem auto;
+        }
+
+        /* ========== IMAGE HOVER EFFECTS ========== */
+        .image-hover {
+            overflow: hidden;
+            border-radius: 0.5rem;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .image-hover:hover {
+            transform: translateY(-5px);
+        }
+
+        .image-hover img {
+            transition: transform 0.5s ease;
+        }
+
+        .image-hover:hover img {
+            transform: scale(1.1);
+        }
+
+        /* ========== REVEAL ANIMATION ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== RESTAURANT CARDS ========== */
+        .restaurant-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .restaurant-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-accent), var(--color-primary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .restaurant-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .restaurant-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .restaurant-badge {
+            display: inline-block;
+            background: var(--color-accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .restaurant-card h3 {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            color: var(--color-primary);
+        }
+
+        .restaurant-card .location {
+            color: var(--color-text-secondary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .restaurant-card .description {
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .reservation-btn {
+            background: var(--color-primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            border: 2px solid var(--color-primary);
+        }
+
+        .reservation-btn:hover {
+            background: var(--color-accent);
+            border-color: var(--color-accent);
+            transform: translateX(5px);
+        }
+
+        .reservation-btn svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .reservation-btn:hover svg {
+            transform: translateX(5px);
+        }
+
+        /* ========== BADGE STYLES ========== */
+        .award-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #283618;
+            padding: 0.5rem 1.5rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+    </style>
 </head>
 <body>
-    <!-- Content will be added here -->
+    <!-- Animated Tropical Background -->
+    <div class="tropical-background"></div>
+
+    <!-- Canvas for floating leaves -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <h1 class="text-2xl md:text-3xl font-light text-white" style="font-family: 'Montserrat', sans-serif; letter-spacing: 3px;">LA CASITA BLANCA</h1>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-white hover:text-[#BC6C25] font-light" style="font-family: 'Montserrat', sans-serif;">Home</a>
+                    <a href="#story" class="nav-link text-white hover:text-[#BC6C25] font-light" style="font-family: 'Montserrat', sans-serif;">Our Story</a>
+                    <a href="#menu" class="nav-link text-white hover:text-[#BC6C25] font-light" style="font-family: 'Montserrat', sans-serif;">Menu</a>
+                    <a href="#gallery" class="nav-link text-white hover:text-[#BC6C25] font-light" style="font-family: 'Montserrat', sans-serif;">Gallery</a>
+                    <a href="#gatherings" class="nav-link text-white hover:text-[#BC6C25] font-light" style="font-family: 'Montserrat', sans-serif;">Private Events</a>
+                    <a href="#contact" class="nav-link text-white hover:text-[#BC6C25] font-light" style="font-family: 'Montserrat', sans-serif;">Contact</a>
+                    <a href="#reservation" class="btn-secondary border-white text-white hover:bg-white hover:text-[#283618]">Reservations</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden fixed top-0 right-0 h-full w-64 bg-[#283618] shadow-2xl z-50">
+            <div class="p-6">
+                <button id="close-menu-btn" class="text-white float-right focus:outline-none">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                <div class="clear-both mt-12 space-y-6">
+                    <a href="#home" class="block text-white hover:text-[#BC6C25] text-lg" style="font-family: 'Montserrat', sans-serif;">Home</a>
+                    <a href="#story" class="block text-white hover:text-[#BC6C25] text-lg" style="font-family: 'Montserrat', sans-serif;">Our Story</a>
+                    <a href="#menu" class="block text-white hover:text-[#BC6C25] text-lg" style="font-family: 'Montserrat', sans-serif;">Menu</a>
+                    <a href="#gallery" class="block text-white hover:text-[#BC6C25] text-lg" style="font-family: 'Montserrat', sans-serif;">Gallery</a>
+                    <a href="#gatherings" class="block text-white hover:text-[#BC6C25] text-lg" style="font-family: 'Montserrat', sans-serif;">Private Events</a>
+                    <a href="#contact" class="block text-white hover:text-[#BC6C25] text-lg" style="font-family: 'Montserrat', sans-serif;">Contact</a>
+                    <a href="#reservation" class="block btn-primary text-center mt-8">Reservations</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="./assets/image_0.jpg" alt="La Casita Blanca Restaurant" class="w-full h-full object-cover loaded">
+            <div class="hero-overlay absolute inset-0"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+            <div class="award-badge mb-4">🏆 James Beard Award Winner</div>
+            <h2 class="hero-title text-5xl md:text-7xl font-light text-white mb-6 text-shadow" style="font-family: 'Montserrat', sans-serif; letter-spacing: 4px;">
+                LA CASITA BLANCA
+            </h2>
+            <p class="hero-subtitle text-xl md:text-3xl text-white mb-4 font-light text-shadow" style="font-family: 'Lora', serif;">
+                Where Tradition Meets Flavor
+            </p>
+            <p class="hero-subtitle text-lg md:text-xl text-white mb-10 font-light text-shadow" style="font-family: 'Lora', serif; opacity: 0.95;">
+                Authentic Puerto Rican Comida Criolla Since 1980
+            </p>
+            <div class="hero-cta space-x-4">
+                <a href="#reservation" class="btn-primary">Book a Table</a>
+                <a href="#menu" class="btn-secondary border-white text-white hover:bg-white hover:text-[#283618]">View Menu</a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10">
+            <div class="animate-bounce">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="py-20 md:py-24 bg-[#FDFDFD] relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <h2 class="text-4xl md:text-5xl font-light mb-4" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                        A Hidden Gem in Santurce
+                    </h2>
+                    <div class="section-divider mx-0"></div>
+                    <p class="text-lg leading-relaxed mb-6" style="color: #606C38;">
+                        Our story begins in 1980 when Jesús M. Pérez and his family founded La Casita Blanca on Tapia Street, in Villa Palmeras, Santurce. Located in a traditional and picturesque house from the 1920s, La Casita Blanca is a hidden gem offering traditional Puerto Rican cuisine that takes you back to the flavors of our grandmothers.
+                    </p>
+                    <p class="text-lg leading-relaxed mb-8" style="color: #606C38;">
+                        We welcome our customers with delicious bacalaítos and plantain soup and send them off with our famous chichaíto, accompanied by coffee beans—a symbol of Health, Money, and Love.
+                    </p>
+                    <a href="#story" class="btn-secondary">Discover Our Story</a>
+                </div>
+                <div class="fade-in image-container">
+                    <img src="./assets/image_5.jpg" alt="La Casita Blanca Dining Experience" class="image-zoom w-full h-auto rounded-lg shadow-2xl loaded">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Farm to Table Section -->
+    <section class="py-20 md:py-24 bg-[#FEFAE0] relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-light mb-4" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                    Traditional Puerto Rican Excellence
+                </h2>
+                <div class="section-divider"></div>
+                <p class="text-lg max-w-3xl mx-auto" style="color: #606C38;">
+                    Every dish celebrates the authentic flavors of Puerto Rico, prepared with love using time-honored recipes passed down through generations.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="fade-in text-center p-8 glass-effect rounded-lg">
+                    <div class="text-5xl mb-4">🏠</div>
+                    <h3 class="text-2xl font-normal mb-3" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                        Historic Location
+                    </h3>
+                    <p style="color: #606C38;">
+                        A traditional 1920s house in Villa Palmeras, Santurce, serving authentic comida criolla since 1980.
+                    </p>
+                </div>
+
+                <div class="fade-in text-center p-8 glass-effect rounded-lg">
+                    <div class="text-5xl mb-4">👨‍🍳</div>
+                    <h3 class="text-2xl font-normal mb-3" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                        Family Recipes
+                    </h3>
+                    <p style="color: #606C38;">
+                        Traditional dishes that take you back to the flavors of our grandmothers' kitchens.
+                    </p>
+                </div>
+
+                <div class="fade-in text-center p-8 glass-effect rounded-lg">
+                    <div class="text-5xl mb-4">🏆</div>
+                    <h3 class="text-2xl font-normal mb-3" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                        James Beard Award
+                    </h3>
+                    <p style="color: #606C38;">
+                        Honored with the prestigious James Beard Foundation's "America's Classics Award."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Preview Section -->
+    <section id="menu" class="py-20 md:py-24 bg-[#FDFDFD] relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-light mb-4" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                    Traditional Favorites
+                </h2>
+                <div class="section-divider"></div>
+                <p class="text-lg max-w-3xl mx-auto" style="color: #606C38;">
+                    Experience authentic Puerto Rican cuisine with dishes prepared using time-honored family recipes.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <!-- Menu Item 1 -->
+                <div class="menu-item fade-in bg-white rounded-lg overflow-hidden shadow-lg">
+                    <div class="image-container">
+                        <img src="./assets/image_2.jpg" alt="Traditional Puerto Rican Tacos" class="image-zoom w-full h-64 object-cover loaded">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-normal mb-2" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                            Bacalaítos & Tostones
+                        </h3>
+                        <p class="mb-4" style="color: #606C38;">
+                            Crispy codfish fritters and fried plantains, served complimentary with our signature plantain soup.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Menu Item 2 -->
+                <div class="menu-item fade-in bg-white rounded-lg overflow-hidden shadow-lg">
+                    <div class="image-container">
+                        <img src="./assets/image_6.jpg" alt="Refreshing Cocktail" class="image-zoom w-full h-64 object-cover loaded">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-normal mb-2" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                            Signature Drinks
+                        </h3>
+                        <p class="mb-4" style="color: #606C38;">
+                            Handcrafted cocktails and our famous chichaíto, served with coffee beans for Health, Money, and Love.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Menu Item 3 -->
+                <div class="menu-item fade-in bg-white rounded-lg overflow-hidden shadow-lg">
+                    <div class="image-container">
+                        <img src="./assets/image_4.jpg" alt="Traditional Main Course" class="image-zoom w-full h-64 object-cover loaded">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-normal mb-3" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                            Comida Criolla
+                        </h3>
+                        <p class="mb-4" style="color: #606C38;">
+                            Authentic Puerto Rican home-style cooking featuring mofongo, pastelón, and grandmother's secret recipes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Full Menu Image -->
+            <div class="fade-in mb-12">
+                <div class="text-center mb-8">
+                    <h3 class="text-3xl font-light mb-4" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                        Full Menu
+                    </h3>
+                    <p class="text-lg" style="color: #606C38;">
+                        Explore our complete selection of traditional Puerto Rican dishes
+                    </p>
+                </div>
+                <div class="image-container max-w-4xl mx-auto">
+                    <img src="./assets/image_9.png" alt="La Casita Blanca Full Menu" class="image-zoom w-full h-auto rounded-lg shadow-xl loaded">
+                </div>
+            </div>
+
+            <div class="text-center fade-in">
+                <p class="text-lg mb-6" style="color: #606C38;">
+                    Our menu features traditional Puerto Rican favorites prepared with love and authenticity.
+                </p>
+                <a href="#reservation" class="btn-primary">Make a Reservation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 md:py-24 bg-[#FEFAE0] relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-light mb-4" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                    Gallery
+                </h2>
+                <div class="section-divider"></div>
+                <p class="text-lg max-w-3xl mx-auto" style="color: #606C38;">
+                    Experience the warmth of our historic villa and the beauty of our authentic Puerto Rican cuisine.
+                </p>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="fade-in image-container h-80">
+                    <img src="./assets/image_0.jpg" alt="Restaurant Exterior" class="image-zoom w-full h-full object-cover rounded-lg loaded">
+                </div>
+                <div class="fade-in image-container h-80">
+                    <img src="./assets/image_3.jpg" alt="Delicious Taco Dish" class="image-zoom w-full h-full object-cover rounded-lg loaded">
+                </div>
+                <div class="fade-in image-container h-80">
+                    <img src="./assets/image_5.jpg" alt="Dining Experience" class="image-zoom w-full h-full object-cover rounded-lg loaded">
+                </div>
+                <div class="fade-in image-container h-80">
+                    <img src="./assets/image_6.jpg" alt="Signature Cocktails" class="image-zoom w-full h-full object-cover rounded-lg loaded">
+                </div>
+                <div class="fade-in image-container h-80">
+                    <img src="./assets/image_4.jpg" alt="Traditional Food" class="image-zoom w-full h-full object-cover rounded-lg loaded">
+                </div>
+                <div class="fade-in image-container h-80">
+                    <img src="./assets/image_10.jpg" alt="Delicious Dessert" class="image-zoom w-full h-full object-cover rounded-lg loaded">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Story Timeline -->
+    <section id="story" class="py-20 md:py-24 bg-[#FDFDFD] relative z-10">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-light mb-4" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                    Our Family Legacy
+                </h2>
+                <div class="section-divider"></div>
+                <p class="text-lg max-w-3xl mx-auto" style="color: #606C38;">
+                    A journey through decades of culinary excellence and Puerto Rican tradition.
+                </p>
+            </div>
+
+            <!-- Timeline -->
+            <div class="relative">
+                <!-- Timeline Line -->
+                <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-[#BC6C25] hidden md:block"></div>
+
+                <!-- Timeline Item 1 -->
+                <div class="timeline-item mb-16 md:flex items-center">
+                    <div class="md:w-1/2 md:pr-12 mb-4 md:mb-0 md:text-right">
+                        <div class="inline-block bg-[#283618] text-white px-4 py-2 rounded-full mb-3" style="font-family: 'Montserrat', sans-serif;">
+                            1980
+                        </div>
+                        <h3 class="text-2xl font-normal mb-2" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                            La Casita Blanca Founded
+                        </h3>
+                        <p style="color: #606C38;">
+                            Jesús M. Pérez and his family open La Casita Blanca on Tapia Street in Villa Palmeras, Santurce, in a traditional 1920s house.
+                        </p>
+                    </div>
+                    <div class="hidden md:block md:w-1/2 md:pl-12"></div>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="timeline-item mb-16 md:flex items-center">
+                    <div class="hidden md:block md:w-1/2 md:pr-12"></div>
+                    <div class="md:w-1/2 md:pl-12">
+                        <div class="inline-block bg-[#283618] text-white px-4 py-2 rounded-full mb-3" style="font-family: 'Montserrat', sans-serif;">
+                            2010
+                        </div>
+                        <h3 class="text-2xl font-normal mb-2" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                            Casita Miramar Opens
+                        </h3>
+                        <p style="color: #606C38;">
+                            The success of La Casita Blanca allows the family to expand, opening Casita Miramar in the former Hotel Toro in Miramar.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 3 -->
+                <div class="timeline-item mb-16 md:flex items-center">
+                    <div class="md:w-1/2 md:pr-12 mb-4 md:mb-0 md:text-right">
+                        <div class="inline-block bg-[#BC6C25] text-white px-4 py-2 rounded-full mb-3" style="font-family: 'Montserrat', sans-serif;">
+                            Present
+                        </div>
+                        <h3 class="text-2xl font-normal mb-2" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                            James Beard Recognition
+                        </h3>
+                        <p style="color: #606C38;">
+                            La Casita Blanca receives the prestigious James Beard Foundation's "America's Classics Award," honoring decades of culinary excellence.
+                        </p>
+                    </div>
+                    <div class="hidden md:block md:w-1/2 md:pl-12"></div>
+                </div>
+
+                <!-- Timeline Item 4 -->
+                <div class="timeline-item md:flex items-center">
+                    <div class="hidden md:block md:w-1/2 md:pr-12"></div>
+                    <div class="md:w-1/2 md:pl-12">
+                        <div class="inline-block bg-[#BC6C25] text-white px-4 py-2 rounded-full mb-3" style="font-family: 'Montserrat', sans-serif;">
+                            Today
+                        </div>
+                        <h3 class="text-2xl font-normal mb-2" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                            Continuing the Tradition
+                        </h3>
+                        <p style="color: #606C38;">
+                            We continue to welcome guests with the same warmth, serving authentic comida criolla in our historic villa, honoring family traditions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Private Gatherings Section -->
+    <section id="gatherings" class="py-20 md:py-24 bg-[#FEFAE0] relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-light mb-4" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                    Private Gatherings
+                </h2>
+                <div class="section-divider"></div>
+                <p class="text-lg max-w-3xl mx-auto" style="color: #606C38;">
+                    Host your special events in our charming historic villa, where authentic Puerto Rican hospitality meets unforgettable celebrations.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <img src="./assets/image_1.jpg" alt="Private Event Setup" class="w-full rounded-lg shadow-2xl">
+                </div>
+                <div class="fade-in">
+                    <h3 class="text-3xl font-light mb-6" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                        Celebrate With Us
+                    </h3>
+                    <p class="text-lg leading-relaxed mb-6" style="color: #606C38;">
+                        Our historic 1920s house provides the perfect intimate setting for your family celebrations, corporate events, and special occasions. Experience authentic Puerto Rican hospitality in a venue filled with character and warmth.
+                    </p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start" style="color: #606C38;">
+                            <svg class="w-6 h-6 text-[#BC6C25] mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Customized menus featuring traditional Puerto Rican cuisine</span>
+                        </li>
+                        <li class="flex items-start" style="color: #606C38;">
+                            <svg class="w-6 h-6 text-[#BC6C25] mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Intimate atmosphere in our historic villa</span>
+                        </li>
+                        <li class="flex items-start" style="color: #606C38;">
+                            <svg class="w-6 h-6 text-[#BC6C25] mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Dedicated service team for your event</span>
+                        </li>
+                        <li class="flex items-start" style="color: #606C38;">
+                            <svg class="w-6 h-6 text-[#BC6C25] mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Flexible event planning to meet your needs</span>
+                        </li>
+                    </ul>
+                    <a href="#contact" class="btn-primary">Contact Us for Events</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visit Our Restaurants Section -->
+    <section class="py-20 md:py-32 bg-[#FDFDFD] relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl lg:text-5xl font-light mb-4" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                    Visit Our Family Restaurants
+                </h2>
+                <div class="section-divider"></div>
+                <p class="text-lg mt-4 max-w-3xl mx-auto" style="color: #606C38;">
+                    Experience authentic Puerto Rican cuisine at both our beloved locations
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+                <!-- La Casita Blanca Card -->
+                <div class="restaurant-card fade-in">
+                    <span class="restaurant-badge">Since 1980 • James Beard Award</span>
+                    <h3 style="font-family: 'Montserrat', sans-serif;">La Casita Blanca</h3>
+                    <div class="location">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 20px; height: 20px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span>Tapia Street, Villa Palmeras, Santurce</span>
+                    </div>
+                    <p class="description">
+                        Our original family restaurant, established in a traditional 1920s house. Honored with the James Beard Foundation's "America's Classics Award," we serve authentic comida criolla in a charming, eclectic atmosphere.
+                    </p>
+                    <a href="#reservation" class="reservation-btn">
+                        <span>Reserve a Table</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                    <div style="margin-top: 1rem; color: #606C38; font-size: 0.875rem;">
+                        <strong>Phone:</strong> Contact for reservations
+                    </div>
+                </div>
+
+                <!-- Casita Miramar Card -->
+                <div class="restaurant-card fade-in">
+                    <span class="restaurant-badge">Since 2010</span>
+                    <h3 style="font-family: 'Montserrat', sans-serif;">Casita Miramar</h3>
+                    <div class="location">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 20px; height: 20px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span>605 Av. Miramar, San Juan, 00907</span>
+                    </div>
+                    <p class="description">
+                        Our sister restaurant in Miramar, housed in the historic former Hotel Toro from the 1920s. Featuring farm-to-table ingredients from our family farm in Manatí and the same authentic family recipes.
+                    </p>
+                    <a href="tel:787-200-8227" class="reservation-btn">
+                        <span>Reserve a Table</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                    <div style="margin-top: 1rem; color: #606C38; font-size: 0.875rem;">
+                        <strong>Phone:</strong> 787-200-8227
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section id="reservation" class="py-20 md:py-24 bg-[#FEFAE0] relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-light mb-4" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                    Make a Reservation
+                </h2>
+                <div class="section-divider"></div>
+                <p class="text-lg max-w-3xl mx-auto" style="color: #606C38;">
+                    Join us for an authentic Puerto Rican dining experience. Reservations are recommended for the best experience.
+                </p>
+            </div>
+
+            <div class="max-w-2xl mx-auto text-center fade-in">
+                <div class="bg-white p-8 rounded-lg shadow-lg mb-8">
+                    <h3 class="text-2xl font-normal mb-4" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                        Call Us Today
+                    </h3>
+                    <p class="text-lg mb-6" style="color: #606C38;">
+                        To ensure the best dining experience, please call ahead to make your reservation.
+                    </p>
+                    <a href="tel:contact" class="btn-primary">Contact for Reservations</a>
+                </div>
+
+                <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-normal mb-4" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                        What to Expect
+                    </h3>
+                    <p class="mb-4" style="color: #606C38;">
+                        Welcome to our historic 1920s villa, where every meal begins with complimentary bacalaítos and plantain soup, and ends with our traditional chichaíto accompanied by coffee beans—a symbol of Health, Money, and Love.
+                    </p>
+                    <p style="color: #606C38;">
+                        Experience authentic Puerto Rican comida criolla in a charming, eclectic atmosphere that takes you back to grandmother's kitchen.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 md:py-24 bg-[#FDFDFD] relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-light mb-4" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                    Visit Us
+                </h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Contact Information -->
+                <div class="fade-in">
+                    <h3 class="text-2xl font-normal mb-6" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                        Contact Information
+                    </h3>
+
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-semibold mb-2" style="color: #283618;">Address</h4>
+                            <p style="color: #606C38;">
+                                Tapia Street<br>
+                                Villa Palmeras, Santurce<br>
+                                San Juan, Puerto Rico
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 class="font-semibold mb-2" style="color: #283618;">Phone</h4>
+                            <p>
+                                <a href="tel:contact" class="text-[#BC6C25] hover:underline">Call for reservations</a>
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 class="font-semibold mb-2" style="color: #283618;">Hours</h4>
+                            <p style="color: #606C38;">
+                                Please call for current hours<br>
+                                Reservations recommended
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <a href="#reservation" class="btn-primary">Make a Reservation</a>
+                    </div>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="fade-in">
+                    <div class="bg-white p-8 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-normal mb-4" style="font-family: 'Montserrat', sans-serif; color: #283618;">
+                            The La Casita Blanca Experience
+                        </h3>
+                        <p class="mb-4" style="color: #606C38;">
+                            Located in a traditional and picturesque house from the 1920s in Villa Palmeras, Santurce, La Casita Blanca is a hidden gem offering traditional Puerto Rican cuisine that takes you back to the flavors of our grandmothers.
+                        </p>
+                        <p class="mb-4" style="color: #606C38;">
+                            We welcome our customers with delicious bacalaítos and plantain soup and send them off with our famous chichaíto, accompanied by coffee beans—a symbol of Health, Money, and Love.
+                        </p>
+                        <p class="mb-6" style="color: #606C38;">
+                            James Beard Foundation "America's Classics Award" winner, celebrating over 40 years of culinary excellence.
+                        </p>
+                        <div class="border-t border-[#BC6C25] pt-6">
+                            <p class="text-sm italic" style="color: #606C38;">
+                                "We look forward to welcoming you to our family table."
+                            </p>
+                            <p class="text-sm font-semibold mt-2" style="color: #283618;">
+                                - The Pérez Family
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <!-- Column 1: Contact -->
+                <div>
+                    <h4 class="text-xl font-normal mb-4" style="font-family: 'Montserrat', sans-serif;">La Casita Blanca</h4>
+                    <p class="text-sm mb-2">Tapia Street</p>
+                    <p class="text-sm mb-2">Villa Palmeras, Santurce</p>
+                    <p class="text-sm mb-2">San Juan, Puerto Rico</p>
+                    <p class="text-sm">
+                        <a href="tel:contact" class="hover:text-[#BC6C25]">Call for reservations</a>
+                    </p>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div>
+                    <h4 class="text-xl font-normal mb-4" style="font-family: 'Montserrat', sans-serif;">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#home" class="hover:text-[#BC6C25]">Home</a></li>
+                        <li><a href="#story" class="hover:text-[#BC6C25]">Our Story</a></li>
+                        <li><a href="#menu" class="hover:text-[#BC6C25]">Menu</a></li>
+                        <li><a href="#gallery" class="hover:text-[#BC6C25]">Gallery</a></li>
+                        <li><a href="#gatherings" class="hover:text-[#BC6C25]">Private Events</a></li>
+                        <li><a href="#contact" class="hover:text-[#BC6C25]">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Sister Restaurant -->
+                <div>
+                    <h4 class="text-xl font-normal mb-4" style="font-family: 'Montserrat', sans-serif;">Family</h4>
+                    <p class="text-sm mb-4">
+                        Visit our sister restaurant, Casita Miramar, located in the historic former Hotel Toro in Miramar.
+                    </p>
+                    <p class="text-sm">
+                        🏆 James Beard Foundation<br>
+                        America's Classics Award Winner
+                    </p>
+                </div>
+            </div>
+
+            <div class="border-t border-white border-opacity-20 pt-8 text-center">
+                <p class="text-sm">
+                    © 2025 La Casita Blanca. All rights reserved. | Over 40 Years of Puerto Rican Tradition
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // ========== CANVAS PARTICLE ANIMATION - TROPICAL LEAVES ==========
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Particle class for tropical leaves and petals
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 5 + 3;
+                this.speedX = Math.random() * 0.8 - 0.4;
+                this.speedY = Math.random() * 0.8 - 0.4;
+                this.opacity = Math.random() * 0.35 + 0.25;
+                // Puerto Rican tropical colors matching the palette
+                this.color = ['rgba(96, 108, 56, 0.4)', 'rgba(188, 108, 37, 0.35)', 'rgba(40, 54, 24, 0.3)', 'rgba(254, 250, 224, 0.5)'][Math.floor(Math.random() * 4)];
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.018;
+                this.type = Math.random() > 0.4 ? 'leaf' : 'petal';
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += this.rotationSpeed;
+
+                // Gentle tropical breeze motion
+                this.x += Math.sin(Date.now() * 0.0007 + this.y * 0.009) * 0.25;
+                this.y += Math.cos(Date.now() * 0.0007 + this.x * 0.009) * 0.25;
+
+                // Wrap around edges
+                if (this.x < -30) this.x = canvas.width + 30;
+                if (this.x > canvas.width + 30) this.x = -30;
+                if (this.y < -30) this.y = canvas.height + 30;
+                if (this.y > canvas.height + 30) this.y = -30;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.globalAlpha = this.opacity;
+
+                if (this.type === 'leaf') {
+                    // Draw tropical leaf shape
+                    ctx.beginPath();
+                    ctx.moveTo(0, -this.size);
+                    ctx.quadraticCurveTo(this.size * 0.8, -this.size * 0.4, this.size * 0.6, this.size * 0.9);
+                    ctx.quadraticCurveTo(0, this.size * 0.6, -this.size * 0.6, this.size * 0.9);
+                    ctx.quadraticCurveTo(-this.size * 0.8, -this.size * 0.4, 0, -this.size);
+                    ctx.closePath();
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                } else {
+                    // Draw hibiscus petal shape
+                    ctx.beginPath();
+                    for (let i = 0; i < 5; i++) {
+                        const angle = (Math.PI * 2 * i) / 5;
+                        const x = Math.cos(angle) * this.size;
+                        const y = Math.sin(angle) * this.size * 1.4;
+                        if (i === 0) {
+                            ctx.moveTo(x, y);
+                        } else {
+                            ctx.lineTo(x, y);
+                        }
+                    }
+                    ctx.closePath();
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                }
+
+                ctx.restore();
+            }
+        }
+
+        // Create particles - responsive count
+        const particles = [];
+        const particleCount = window.innerWidth < 768 ? 35 : 55;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        // Animation loop
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            requestAnimationFrame(animateParticles);
+        }
+
+        animateParticles();
+
+        // ========== NAVIGATION SCROLL EFFECT ==========
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ========== MOBILE MENU ==========
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // ========== SCROLL ANIMATIONS ==========
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Add 'visible' class for fade-in and timeline elements
+                    if (entry.target.classList.contains('fade-in') || entry.target.classList.contains('timeline-item')) {
+                        entry.target.classList.add('visible');
+                    }
+                    // Add 'active' class for reveal elements (if not already active)
+                    if (entry.target.classList.contains('reveal') && !entry.target.classList.contains('active')) {
+                        entry.target.classList.add('active');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Observe timeline items
+        document.querySelectorAll('.timeline-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Observe reveal elements
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ========== SMOOTH SCROLLING ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ========== PRELOAD IMAGES ==========
+        window.addEventListener('load', () => {
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                if (img.complete) {
+                    img.classList.add('loaded');
+                } else {
+                    img.addEventListener('load', () => {
+                        img.classList.add('loaded');
+                    });
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
